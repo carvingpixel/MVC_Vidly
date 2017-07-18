@@ -1,0 +1,31 @@
+﻿@model Vidly.Models.Movie
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // the view Random based on controller and model of movie
+}
+
+<!-- 
+passing data to a view, do not use ViewData or ViewBag because of magic strings and magic methods and how fragile it is
+
+-->
+<h2>Movie</h2>
+
+<!-- <p>Model.Name</p> -->
+
+<!-- <p>AT$( ((Movie) ViewData["Movie"]).Name )</p>  //legacy -->
+<!-- <p>AT$ViewBag.MovieVBName</p> -->
+ <p>@ViewBag.MovieVB.Name</p> 
+
+
+
+<form asp-controller="Movies" asp-action="Create" class="form-inline mbm">
+
+    <p>calculate the answer to the Ultimate Question of Life, the Universe, and Everything...</p>
+
+    <div class="form-group">
+        <input class="form-control" name="passMe" />
+        <input class="btn btn-primary" type="submit" value="Calculate" />
+    </div>
+
+</form>
