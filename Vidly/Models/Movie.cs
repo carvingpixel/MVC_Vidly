@@ -12,6 +12,7 @@ namespace Vidly.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
+        public string Quote { get; set; }
 
         //moves/random
         // create a movieController with an action called random

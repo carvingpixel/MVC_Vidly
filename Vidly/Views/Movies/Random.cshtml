@@ -1,25 +1,40 @@
-﻿@model Vidly.Models.Movie
+﻿@using Vidly.Models
+@model Vidly.ViewModels.RandomMovieViewModel
+ <!-- AT$model Vidly.Models.Movie // no longer passing movie model, we are passing modelview that holds movie and customerlist --> 
+
 @{
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
     // the view Random based on controller and model of movie
 }
 
-<!-- 
-passing data to a view, do not use ViewData or ViewBag because of magic strings and magic methods and how fragile it is
-
--->
 <h2>Movie</h2>
 
+<!-- whebn passing data to a view, do not use ViewData or ViewBag because of magic strings and magic methods (fragile) -->
 <!-- <p>Model.Name</p> -->
-
 <!-- <p>AT$( ((Movie) ViewData["Movie"]).Name )</p>  //legacy -->
 <!-- <p>AT$ViewBag.MovieVBName</p> -->
- <p>@ViewBag.MovieVB.Name</p> 
+<!-- <p>AT$ViewBag.MovieVB.Name</p> -->
+
+@{
+    var className = Model.Customers.Count > 1 ? "popular" : null;
+}
+<h2 class="@className">@Model.Movie.Name</h2>
 
 
+@if (Model.Customers.Count == 0)   {
+    <text>No one has rented this movie before.</text>
+} else {
+    <ul>
+        @foreach (var ec in Model.Customers)
+        {
+            <li>@ec.Name</li>
+        }
+    </ul>
+}
 
-<form asp-controller="Movies" asp-action="Create" class="form-inline mbm">
+
+<form asp-controller="Movies" asp-action="Create" class="form-inline mbm" method="post">
 
     <p>calculate the answer to the Ultimate Question of Life, the Universe, and Everything...</p>
 

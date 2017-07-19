@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -12,10 +13,11 @@ namespace Vidly.Controllers
     {
    
         // GET: Movies/Random
+
         public ActionResult Random()
         {
             // Instantiate Movie Object based on Model.cs //
-            // put the movie model into our view so we can render it//
+            // Movie movie = new Movie() {Name = "Hitchhiker's Guide to the Galaxy"};
             // return View(movie);
 
             Movie movie = new Movie()
@@ -25,18 +27,41 @@ namespace Vidly.Controllers
                 Id = 1           
             };
 
+            //[ 1. ViewData - Legacy ]------------------------------------------------------------
             //ViewData["MovieMagicS"] = movie;   // dont use ViewData beacuse of magic strings 
 
-            ViewBag.MovieVBName = movie.Name;  //dont use viewbag - magic method issues MovieMagicM too fragile spreads through code
-            ViewBag.MovieVB = movie;  //dont use viewbag - magic method issues MovieMagicM too fragile spreads through code
-            return View();
+            //[ 2. MS update to ViewData was ViewBag ] ------------------------------------------
+            //dont use viewbag - magic method issues MovieMagicM too fragile spreads through code
+            //ViewBag.MovieVBName = movie.Name;  
+            //ViewBag.MovieVB = movie;  
+            //return View();
 
-            ////3.Instead 
+            ////[ 3.Instead use following ] ------------------------------------------
             //var viewResult = new ViewResult();
             ////viewResult.ViewData.Model
             //// so movie passed will be assigned to the Model property
             //// ViewData is a DataDictionary can use with key value pairs or its model property to work with an object(preffered way)
             //return View(movie);
+            // 2.14 passing data to views
+
+            //list to hold customer objects that have checked out a movie
+
+            var customersLT = new List<Customer>
+            {
+                new Customer() {Name = "Customer One"},
+                new Customer() {Name = "Customer Two"}
+            };
+
+            var viewModel = new RandomMovieViewModel
+            {
+                //init movie & customers
+                Movie = movie,
+                Customers = customersLT
+            };
+
+            // now instead of passing movie, we pass the viewModel we created
+            return View(viewModel);
+
         }
 
 
@@ -51,12 +76,11 @@ namespace Vidly.Controllers
 
 
         // GET: Movies/Random
+        [HttpPost]
         public ActionResult Create(string passMe)
         {
             // /movies/Create?passMe=test+me
-            TempData["msg"] = "<script>alert('Edit');</script>";
-            return Content($"Here You Go: {passMe}");
-
+            return Content($"Here You Go: {0}", passMe);
         }
 
         //Get: Movies/
@@ -72,7 +96,7 @@ namespace Vidly.Controllers
         }
 
 
-        //Attribute Routing//          // appply route atribute and pass the url template  
+        //Attribute Routing//  -- appply route atribute and pass the url template  
         //regex regular expression for constraint for digit repeated 4 times and range from 1-12
         //get action ByReleaseAttribute // this is attributes based custom routing.
         //        [Route("movies/attributes/{year}/{month:regex(\\d{4}):range(1, 12)}")]
