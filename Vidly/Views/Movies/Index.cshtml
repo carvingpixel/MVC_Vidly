@@ -1,0 +1,18 @@
+﻿
+@model Vidly.ViewModels.RandomMovieViewModel
+<!-- AT$model Vidly.Models.Movie // no longer passing movie model, we are passing modelview that holds movie and customerlist -->
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Movies</h2>
+
+<!-- whebn passing data to a view, do not use ViewData or ViewBag because of magic strings and magic methods (fragile) -->
+<!-- <p>Model.Name</p> -->
+<!-- <p>AT$( ((Movie) ViewData["Movie"]).Name )</p>  //legacy -->
+<!-- <p>AT$ViewBag.MovieVBName</p> -->
+<!-- <p>AT$ViewBag.MovieVB.Name</p> -->
+

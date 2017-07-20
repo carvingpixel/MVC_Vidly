@@ -7,7 +7,14 @@
 
 <h2>@Model.Name Create</h2>
 
-<script type="text/javascript">
-    alert("yes");
-</script>
 
+<form asp-controller="Movies" asp-action="Create" method="post" class="form-inline mbm">
+
+    <p>calculate the answer to the Ultimate Question of Life, the Universe, and Everything...</p>
+
+    <div class="form-group">
+        <input class="form-control" name="passMe" />
+        <input class="btn btn-primary" type="submit" value="Calculate" />
+    </div>
+
+</form>

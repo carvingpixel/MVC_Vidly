@@ -1,0 +1,48 @@
+﻿@model Vidly.ViewModels.RandomMovieViewModel
+
+@{
+    ViewBag.Title = "Check";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@Model.Movie.Name</h2>
+
+<h5>Author: @Model.Movie.Author</h5>
+
+<form asp-controller="Movies" asp-action="Create" class="form-inline mbm" method="post">
+    <p>calculate the answer to the Ultimate Question of Life, the Universe, and Everything...</p>
+    <div class="form-group">
+        <input class="form-control" name="passMe" />
+        <input class="btn btn-primary" type="submit" value="Calculate" />
+    </div>
+</form>
+
+
+<h2>Using ViewBag</h2>
+<p>ViewBag Count: @ViewBag.myC</p>
+<p>viewBag Words unique: @ViewBag.myWU</p>
+
+
+
+<h2>Using ViewModels</h2>
+
+@{ var quotePassed = Model.Movie.UserString; }
+
+<p>Count Total: @Model.Movie.CountTotal(quotePassed)</p>
+<p>Unique Words: @Model.Movie.WordsUnique(quotePassed)</p>
+<p>Unique Count Each</p>
+
+@{ Dictionary<string, int> myDictionary = Model.Movie.CountUnique(quotePassed); }
+<ul>
+    @foreach (var subItem in myDictionary)
+    {
+        <li>
+            @subItem.Key
+            @subItem.Value
+        </li>
+    }
+</ul>
+ 
+
+        

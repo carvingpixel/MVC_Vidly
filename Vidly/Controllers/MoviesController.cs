@@ -11,10 +11,22 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-   
-        // GET: Movies/Random
 
-        public ActionResult Random()
+        //Get: Movies/
+        public ActionResult Index(int? pageIndex, string sortBy)
+        {
+            if (!pageIndex.HasValue)
+                pageIndex = 1;
+
+            if (String.IsNullOrWhiteSpace(sortBy))
+                sortBy = "Name";
+
+            return View();
+            //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        }
+
+        // GET: Movies/Random
+        public ActionResult Check(string passMe)
         {
             // Instantiate Movie Object based on Model.cs //
             // Movie movie = new Movie() {Name = "Hitchhiker's Guide to the Galaxy"};
@@ -23,9 +35,70 @@ namespace Vidly.Controllers
             Movie movie = new Movie()
             {
                 Name = "Hitchhiker's Guide to the Galaxy",
-                Author = "Douglas Adams",
-                Id = 1           
+                Desc = "import library to check stirngs and words",
+                Id = 1,
             };
+
+            if (String.IsNullOrWhiteSpace(passMe))
+            {
+                movie.Author = "Douglas Adams";
+                movie.UserString = "";
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                ViewBag.MyDictionary = myDictionary;
+            }
+            else
+            {
+                movie.UserString = passMe;
+                ViewBag.myC = movie.CountTotal(passMe);
+                ViewBag.myWU = movie.WordsUnique(passMe);
+            }
+
+
+            var viewModel = new RandomMovieViewModel
+            {
+                //init movie & customers
+                Movie = movie,
+            };
+
+            // now instead of passing movie, we pass the viewModel we created
+            return View(viewModel);
+
+        }
+
+
+
+
+        // GET: Movies/Random
+        public ActionResult Random(string passMe)
+        {
+            // Instantiate Movie Object based on Model.cs //
+            // Movie movie = new Movie() {Name = "Hitchhiker's Guide to the Galaxy"};
+            // return View(movie);
+
+            Movie movie = new Movie()
+            {
+                Name = "Hitchhiker's Guide to the Galaxy",
+                Desc = "import library to check stirngs and words",
+                Id = 1,
+            };
+
+            if (String.IsNullOrWhiteSpace(passMe))
+            {
+                movie.Author = "Douglas Adams";
+                movie.UserString = "temp string";         
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                ViewBag.MyDictionary = myDictionary;
+            }
+
+            else
+            {
+                movie.Author = passMe;
+                movie.UserString = passMe;
+              
+                // ViewBag.MyDictionary = uniqueDict;
+
+            }
+
 
             //[ 1. ViewData - Legacy ]------------------------------------------------------------
             //ViewData["MovieMagicS"] = movie;   // dont use ViewData beacuse of magic strings 
@@ -80,19 +153,9 @@ namespace Vidly.Controllers
         public ActionResult Create(string passMe)
         {
             // /movies/Create?passMe=test+me
-            return Content($"Here You Go: {0}", passMe);
-        }
+            @ViewBag.Response = "Here You Go: {0}" + passMe;
 
-        //Get: Movies/
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+            return View();
         }
 
 

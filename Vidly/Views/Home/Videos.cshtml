@@ -1,0 +1,18 @@
+﻿@model Vidly.Models.Movie
+@{
+    ViewBag.Title = "Videos";
+    ViewBag.Favorite = "The Empire Strikes Back";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+
+
+<p>@Model.Name</p>
+<p>@Model.Author</p>
+<p>@Model.Id</p>
+
+<p>But my favorite @Model.Name was @ViewBag.Favorite</p>
+
+<p>@ViewBag.Message2</p>

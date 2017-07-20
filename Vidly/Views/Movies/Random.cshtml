@@ -1,6 +1,5 @@
-﻿@using Vidly.Models
+﻿<!-- AT$model Vidly.Models.Movie // no longer passing movie model, we are passing modelview that holds movie and customerlist -->
 @model Vidly.ViewModels.RandomMovieViewModel
- <!-- AT$model Vidly.Models.Movie // no longer passing movie model, we are passing modelview that holds movie and customerlist --> 
 
 @{
     ViewBag.Title = "Random";
@@ -22,9 +21,12 @@
 <h2 class="@className">@Model.Movie.Name</h2>
 
 
-@if (Model.Customers.Count == 0)   {
+@if (Model.Customers.Count == 0)
+{
     <text>No one has rented this movie before.</text>
-} else {
+}
+else
+{
     <ul>
         @foreach (var ec in Model.Customers)
         {
@@ -33,6 +35,8 @@
     </ul>
 }
 
+
+<h2>Author: @Model.Movie.Author</h2>
 
 <form asp-controller="Movies" asp-action="Create" class="form-inline mbm" method="post">
 
@@ -44,3 +48,29 @@
     </div>
 
 </form>
+
+<p>You Provided: @Model.Movie.UserString;</p>
+
+@{ var quotePassed = Model.Movie.UserString; }
+
+<p>Count Total: @Model.Movie.CountTotal(quotePassed)</p>
+<p>Unique Words: @Model.Movie.WordsUnique(quotePassed)</p>
+<p>Unique Count Each: @Model.Movie.CountUnique(quotePassed)</p>
+
+@{ 
+    Dictionary<string, int> myDictionary = Model.Movie.CountUnique(quotePassed);
+}
+            <ul>
+                @foreach (var subItem in myDictionary)
+                {
+                    <li>
+                        @subItem.Key
+                        @subItem.Value
+                </li>
+                }
+            </ul>
+ 
+
+        <h3>Simple Test with string as params</h3>    
+        <p>Dictionary:  @Model.Movie.CountUnique("simple test of test")</p>
+        
