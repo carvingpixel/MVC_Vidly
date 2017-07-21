@@ -11,7 +11,9 @@ namespace Vidly.ViewModels
     {
         //Movie object
         public Movie Movie { get; set; }
+
         //List of Customers
         public List<Customer> Customers { get; set; }
+        
     }
 }
