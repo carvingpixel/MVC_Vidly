@@ -29,7 +29,6 @@ namespace Vidly.Controllers
         // GET: Movies/Check - calling string library to disemenate the string passed from form
         public ActionResult Check(string passMe)
         {
-
             // inst movie
             Movie movie = new Movie()
             {
@@ -47,26 +46,30 @@ namespace Vidly.Controllers
                 ViewBag.MyDictionary = myDictionary;
             }
             else
-            {   // call methods with string passed
+            {   // call methods with string passed using viewbag here
                 // does MVC have a built in htmlentities method to sanitize input?
                 movie.UserString = passMe;
                 ViewBag.myC = movie.CountTotal(passMe);
                 ViewBag.myWU = movie.WordsUnique(passMe);
             }
 
-
-            var viewModel = new CreateMovieViewModel
+            //customers list to hold users who are discussing or like this movie
+            var customersLT = new List<Customer>
             {
-                //init movie & customers
-                Movie = movie,
+                new Customer() {Name = "Scott Kelley"},
+                new Customer() {Name = "Lokin Crook"}
             };
 
-            // now instead of passing movie, we pass the viewModel we created
+            // pass movie and customers list through viewmodel
+            var viewModel = new CreateMovieViewModel
+            {   //assign objects to viewmodel properties
+                Movie = movie,
+                Customers = customersLT
+            };
+
+            // now instead of passing movie, we pass the viewModel 
             return View(viewModel);
-
         }
-
-
 
 
         // GET: Movies/Random
@@ -139,8 +142,10 @@ namespace Vidly.Controllers
         }
 
 
-        // GET: Movies/Random
-        public ActionResult Edit(int id) 
+        // GET: Movies/Edit contentresult to Content
+        // there are many actionresults such as viewresult, contentresult etc. 
+        // we can use just one of them or call actionresult allow access to all the actions
+        public ContentResult Edit(int id) 
         {
                 // /movies/edit?id=44
                 // TempData["msg"] = "<script>alert('Edit');</script>";
@@ -149,8 +154,7 @@ namespace Vidly.Controllers
         }
 
 
-        // GET: Movies/Random
-        [HttpPost]
+        // GET: Movies/Create
         public ActionResult Create(string passMe)
         {
             // /movies/Create?passMe=test+me
@@ -163,7 +167,7 @@ namespace Vidly.Controllers
         //Attribute Routing//  -- appply route atribute and pass the url template  
         //regex regular expression for constraint for digit repeated 4 times and range from 1-12
         //get action ByReleaseAttribute // this is attributes based custom routing.
-        //        [Route("movies/attributes/{year}/{month:regex(\\d{4}):range(1, 12)}")]
+        // e.g.  movies/attributes/2017/8
         [Route("movies/attributes/{year}/{month:regex(\\d{2}):range(1, 12)}")]
         public ActionResult ByReleaseAttribute(int year, int month)
         {
@@ -171,7 +175,7 @@ namespace Vidly.Controllers
         }
 
 
-        //Get (mvcaction4) Action == ByReleaseDate  // this is based on convention /legacy custom routes
+        //Get (mvcaction4) Action == ByReleaseDate  // this is based on convention /l egacy custom routing
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
