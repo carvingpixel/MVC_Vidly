@@ -3,30 +3,23 @@
 @{
     ViewBag.Title = "Customers";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
 
 <p>Setting up a user/customer page </p>
 
 
+@if (Model.Customers.Count == 0)
+{
+    <text>No One is online discussing movies right now.</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead><tr><th>Users Online Discussing Movies</th></tr></thead>
+        @foreach (var custOn in Model.Customers)
+        {
+            <tr><td>@custOn.Id - <a href="/Details/@custOn.Id">@custOn.Name </a></td></tr>
+        }
+    </table>
+}
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Users Online Discussing Movies</th>
-    </tr>
-    </thead>
-    <tr>
-        @if (Model.Customers.Count == 0)
-        {
-            <td> <text>No One is online discussing movies right now.</text> </td>
-        }
-        else
-        {
-            foreach (var custOn in Model.Customers)
-            {
-                <td><a href="/Details/@custOn.Id">@custOn.Id - @custOn.Name </a></td>
-            }
-        }
-    </tr>
-</table>
