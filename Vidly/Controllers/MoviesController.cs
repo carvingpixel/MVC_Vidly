@@ -93,14 +93,11 @@ namespace Vidly.Controllers
                 Dictionary<string, int> myDictionary = new Dictionary<string, int>();
                 ViewBag.MyDictionary = myDictionary;
             }
-
             else
             {
                 movie.Author = passMe;
                 movie.UserString = passMe;
-              
                 // ViewBag.MyDictionary = uniqueDict;
-
             }
 
 

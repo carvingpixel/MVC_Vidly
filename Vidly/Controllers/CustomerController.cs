@@ -3,17 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Vidly.Models;
+using Vidly.ViewModels;
+
 
 namespace Vidly.Controllers
 {
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult Index()
+        public ViewResult Index()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            var customersLT = new List<Customer>
+            {
+                new Customer() {Name = "Lokin Crook", Id = 1},
+                new Customer() {Name = "Scott Kelley", Id = 2}
+            };
+
+            var custViewModel = new IndexCustomersViewModel
+            {  //list 
+                Customers = customersLT
+            };
+
+            return View(custViewModel);
         }
 
     }
