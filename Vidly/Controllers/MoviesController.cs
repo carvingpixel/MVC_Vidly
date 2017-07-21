@@ -12,7 +12,7 @@ namespace Vidly.Controllers
     public class MoviesController : Controller
     {
 
-        //Get: Movies/
+        //Get: Index // pass an int and string - if int no value set defaults 
         public ActionResult Index(int? pageIndex, string sortBy)
         {
             if (!pageIndex.HasValue)
@@ -25,13 +25,12 @@ namespace Vidly.Controllers
             //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
         }
 
-        // GET: Movies/Random
+
+        // GET: Movies/Check - calling string library to disemenate the string passed from form
         public ActionResult Check(string passMe)
         {
-            // Instantiate Movie Object based on Model.cs //
-            // Movie movie = new Movie() {Name = "Hitchhiker's Guide to the Galaxy"};
-            // return View(movie);
 
+            // inst movie
             Movie movie = new Movie()
             {
                 Name = "Hitchhiker's Guide to the Galaxy",
@@ -39,6 +38,7 @@ namespace Vidly.Controllers
                 Id = 1,
             };
 
+            // if null or white set defaults
             if (String.IsNullOrWhiteSpace(passMe))
             {
                 movie.Author = "Douglas Adams";
@@ -47,14 +47,15 @@ namespace Vidly.Controllers
                 ViewBag.MyDictionary = myDictionary;
             }
             else
-            {
+            {   // call methods with string passed
+                // does MVC have a built in htmlentities method to sanitize input?
                 movie.UserString = passMe;
                 ViewBag.myC = movie.CountTotal(passMe);
                 ViewBag.myWU = movie.WordsUnique(passMe);
             }
 
 
-            var viewModel = new RandomMovieViewModel
+            var viewModel = new CreateMovieViewModel
             {
                 //init movie & customers
                 Movie = movie,

@@ -1,10 +1,12 @@
-﻿@model Vidly.ViewModels.RandomMovieViewModel
+﻿@model Vidly.ViewModels.CreateMovieViewModel
 
 @{
     ViewBag.Title = "Check";
+    ViewBag.MoreStuff = "We can add more stuff here too";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@* now we can use model.Movie.Name or model.Customer etc. *@
 
 <h2>@Model.Movie.Name</h2>
 
@@ -19,12 +21,16 @@
 </form>
 
 
+
+@* using viewbag here with count and words unique *@
 <h2>Using ViewBag</h2>
 <p>ViewBag Count: @ViewBag.myC</p>
 <p>viewBag Words unique: @ViewBag.myWU</p>
 
 
 
+
+@* prefer viewmodel as well which is displayed here *@
 <h2>Using ViewModels</h2>
 
 @{ var quotePassed = Model.Movie.UserString; }
@@ -33,6 +39,10 @@
 <p>Unique Words: @Model.Movie.WordsUnique(quotePassed)</p>
 <p>Unique Count Each</p>
 
+
+
+
+@* dictionary to hold countunique and iterate in foreach *@
 @{ Dictionary<string, int> myDictionary = Model.Movie.CountUnique(quotePassed); }
 <ul>
     @foreach (var subItem in myDictionary)
@@ -43,6 +53,3 @@
         </li>
     }
 </ul>
- 
-
-        
