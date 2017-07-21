@@ -11,37 +11,40 @@ namespace Vidly.Controllers
 {
     public class CustomerController : Controller
     {
-        // GET: Customer
+        // GET: Customer -- getcustomers list 
         public ViewResult Index()
         {
             ViewBag.Message = "Your application description page.";
 
-            var customersLT = new List<Customer>
-            {
-                new Customer() {Name = "Lokin Crook", Id = 1},
-                new Customer() {Name = "Scott Kelley", Id = 2}
-            };
+            var customers = GetCustomers();
 
-            var custViewModel = new IndexCustomersViewModel
-            {  //list 
-                Customers = customersLT
-            };
-
-            return View(custViewModel);
+            return View(customers);
         }
 
 
-        //GET: Customer/Details/?
-        public ActionResult Details(int? custId)
+        //GET: Customer/Details/? set a customer from getcustomers and iterate to find where c.id == id
+        public ActionResult Details(int id)
         {
-            if (!custId.HasValue)
-                custId = 1;
+            var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
 
-            ViewBag.ID = custId;
-            ViewBag.Message = "Viewing Customers Page: " + custId;
-
-            return Content("id=" + custId);
+            return View(customer);
         }
+
+
+        // not using a database and we need more than one customer so we setup a list of customers
+        // then we need a way to get them so let's IEnum via a set method GetCustomers()
+        // the can call from views/actions
+        private IEnumerable<Customer> GetCustomers()
+        {
+            return new List<Customer>
+            {
+                new Customer() {Id = 1, Name = "Lokin Crook"},
+                new Customer() {Id = 2, Name = "Mary Poppins"}
+            };
+        }
+
 
     }
 }
