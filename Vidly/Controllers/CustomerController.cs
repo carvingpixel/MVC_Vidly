@@ -30,5 +30,18 @@ namespace Vidly.Controllers
             return View(custViewModel);
         }
 
+
+        //GET: Customer/Details/?
+        public ActionResult Details(int? custId)
+        {
+            if (!custId.HasValue)
+                custId = 1;
+
+            ViewBag.ID = custId;
+            ViewBag.Message = "Viewing Customers Page: " + custId;
+
+            return Content("id=" + custId);
+        }
+
     }
 }

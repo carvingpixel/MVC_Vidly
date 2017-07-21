@@ -31,9 +31,6 @@
 
 <p>Count Total: @Model.Movie.CountTotal(quotePassed)</p>
 <p>Unique Words: @Model.Movie.WordsUnique(quotePassed)</p>
-
-
-<p>Unique Count Each</p>
 @* dictionary to hold countunique and iterate in foreach *@
 @{ Dictionary<string, int> myDictionary = Model.Movie.CountUnique(quotePassed); }
 <ul>
